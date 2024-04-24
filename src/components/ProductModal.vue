@@ -1,5 +1,5 @@
 <template>
-  <div class="modal" tabindex="-1">
+  <div class="modal" tabindex="-1" ref="modalRef">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header bg-secondary text-white">
@@ -41,7 +41,8 @@
                 <textarea type="text" id="description" class="form-control" v-model="tempProduct.description"></textarea>
                 <label for="content" class="form-label">說明內容</label>
                 <textarea type="text" id="content" class="form-control" v-model="tempProduct.content"></textarea>
-                <input type="checkbox" id="is_enabled" v-model="tempProduct.is_enabled">
+                <input type="checkbox" id="is_enabled" v-model="tempProduct.is_enabled" 
+                  >
                 <label for="is_enabled" class="form-check-label">是否啟用</label>
               </div>
               </div>
@@ -50,7 +51,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-secondary" @click="$emit('update-product',tempProduct)">Save changes</button>
+          <button type="button" class="btn btn-secondary" @click="saveUpdate">Save changes</button>
         </div>
       </div>
     </div>
@@ -59,32 +60,40 @@
 
 <script setup lan="ts">
   import Modal from 'bootstrap/js/dist/modal';
-  import { ref, onMounted, watch } from 'vue';
+  import { ref, onMounted, watch, defineEmits} from 'vue';
 
   const modalRef = ref(null);
+  const modal = ref(null);
 
-  function showModal () {
-    modalRef.value.show();
-  }
-  function hideModal () {
-    modalRef.value.hide();
-  }
   onMounted(() => {
-    modalRef.value = new Modal(document.querySelector('.modal'));
+    modal.value = new Modal(modalRef.value);
   })
 
+  function showModal () {
+    modal.value.show();
+  }
+  function hideModal () {
+    modal.value.hide();
+  }
 
+  // 外部傳入資料
   const props = defineProps({
     product:{
       type:Object,
       default () { return {} }
     }
   });
-
   watch(() => props.product, (newValue) => {
-      tempProduct.value = newValue;
-    });
-  const tempProduct = ref ({});
+    tempProduct.value = newValue;
+  });
+  
+  const tempProduct = ref({});
+  
+  // 儲存資料觸發外部事件
+  const emit = defineEmits(['update-product']);
+  function saveUpdate () {
+    emit('update-product',tempProduct.value);
+  }
 
   // 將組件方法提供給外部使用
   defineExpose({
