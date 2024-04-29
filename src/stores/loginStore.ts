@@ -15,7 +15,6 @@ export const useLoginStore = defineStore('Login', () => {
       password:null
     })
 
-    const isLogin = ref(false);
 
     function signIn():void{
       const api=`${import.meta.env.VITE_APP_API}admin/signin`
@@ -24,7 +23,6 @@ export const useLoginStore = defineStore('Login', () => {
           if(res.data.success){
             const { expired , token } = res.data
             document.cookie=`token=${token}; expires=${new Date(expired)}`
-            isLogin.value = true;
             router.push('/dashboard/productcomponent')
           }else{
             console.log('登入失敗')
@@ -32,5 +30,5 @@ export const useLoginStore = defineStore('Login', () => {
         })
     }
 
-    return { user, signIn, isLogin };
+    return { user, signIn };
 })

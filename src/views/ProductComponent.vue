@@ -1,10 +1,10 @@
 <template>
-  <div class="container product">
+  <div class="container">
     <div class="text-end">
-      <button type="button" class="btn btn-dark" @click.prevent="openModal(true)">新增一個產品</button>
+      <button type="button" class="btn btn-outline-dark" @click.prevent="openModal(true)">新增一個產品</button>
     </div>
-    <table>
-      <thead>
+    <table class="table text-center mt-4">
+      <thead class="table-dark">
         <tr>
           <td>名稱</td>
           <td>分類</td>
@@ -13,7 +13,7 @@
           <td>編輯</td>
         </tr>
       </thead>
-      <tbody v-for="item in data" :key="item.id">
+      <tbody v-for="item in data" :key="item.id" class="table-light">
         <tr>
           <td>{{ item.title }}</td>
           <td>{{ item.category }}</td>
@@ -33,12 +33,14 @@
 </template>
 
 <style>
-  .product{
-    padding: 0;
-    text-align: center;
-    display: flex;
-    flex-direction: column; 
-  }
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+td {
+  width: auto;
+}
 </style>
 
 <script setup lang="ts">
@@ -48,19 +50,21 @@
   import { ref } from 'vue';
 
   interface Product {
-    id: number;
+    id: string;
     category: string;
     title: string;
-    price: number;
+    price: number | null;
     is_enabled: boolean;
   }
   const initialProduct: Product[] = [];
+  
   const data = ref<Product[]>(initialProduct);
   //取得產品資料
-  const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/products/all`
   function getProduct() {
+    const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/products/all`
     axios.get(api).then((res) => {
       data.value = res.data.products
+      console.log(res)
     })
   }
   getProduct();
@@ -101,7 +105,13 @@
   }
 
   // 佔存產品資料
-  const tempProduct = ref({});
+  const tempProduct = ref<Product>({
+    id: '',
+    category: '',
+    title: '',
+    price:null,
+    is_enabled: false
+  });
   // 更新產品列表
   function updateProduct(item:any) {
     tempProduct.value = item;
@@ -130,9 +140,15 @@
   }
   // 確認為新增還編輯
   const isNewRef = ref(false);
-  function openModal (isNew:any, item?:any) {
+  function openModal (isNew:boolean, item?:any) {
     if(isNew){
-      tempProduct.value = {};
+      tempProduct.value = {    
+        id: '',
+        category: '',
+        title: '',
+        price: null,
+        is_enabled: false
+      };
     }else{
       tempProduct.value = {...item};
     }

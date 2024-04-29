@@ -10,6 +10,7 @@
           <button type="submit" class="btn btn-dark">登入</button>
         </form>
       </div>
+      <RouterLink to="/">回首頁</RouterLink>
     </div>
   </div>
 </template>

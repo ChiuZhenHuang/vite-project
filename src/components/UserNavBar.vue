@@ -8,31 +8,16 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <RouterLink to="/DashBoard/ProductComponent" class="nav-link">產品管理</RouterLink>
+            <RouterLink to="/about" class="nav-link">關於我們</RouterLink>
           </li>
           <li class="nav-item">
-            <a class="nav-link" style="cursor: pointer;" @click.prevent="LogOut">登出</a>
+            <RouterLink to="/product" class="nav-link">產品頁面</RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink to="/login" class="nav-link"><i class="bi bi-people"></i></RouterLink>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
-
-<script setup lang="ts">
-import axios from 'axios';
-import router from '@/router';
-// import { useLoginStore } from '@/stores/loginStore';
-
-// const store = useLoginStore();
-
-function LogOut () {
-    const api=`${import.meta.env.VITE_APP_API}logout`
-    axios.post(api)
-    .then((res)=>{
-      if(res.data.success){
-        router.push('/login')
-      }
-    })
-  }
-</script>

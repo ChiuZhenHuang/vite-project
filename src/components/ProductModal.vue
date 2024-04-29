@@ -8,40 +8,40 @@
         </div>
         <div class="modal-body">
           <div class="row text-start">
-            <div class="col-4">
+            <div class="col-4 d-flex flex-column align-items-center">
               <label for="image">請輸入圖片網址</label>
-              <input type="text" id="image" v-model="tempProduct.imageUrl" class="form-control" placeholder="請輸入圖片連結"/>
-              <img src="" alt="">
+              <input type="text" id="image" name="image" v-model="tempProduct.imageUrl" class="form-control" placeholder="請輸入圖片連結"/>
+              <img style="height: 180px; width: 180px;" :src="tempProduct.imageUrl" alt="產品圖">
             </div>
             <div class="col-8">
               <div>
                 <label for="title" class="form-label">標題</label>
-                <input type="text" class="form-control" v-model="tempProduct.title" >
+                <input type="text" id="title" name="title" class="form-control" v-model="tempProduct.title" >
               </div>
               <div class="row">
                 <div class="col-6 mb-3">
                   <label for="category">分類</label>
-                  <input type="text" id="category" class="form-control" v-model="tempProduct.category" >
+                  <input type="text" id="category" name="category" class="form-control" v-model="tempProduct.category" >
                 </div>
                 <div class="col-6 mb-3">
                   <label for="unit">單位</label>
-                  <input type="text" id="unit" class="form-control" v-model="tempProduct.unit">
+                  <input type="text" id="unit" name="unit" class="form-control" v-model="tempProduct.unit">
                 </div>
                 <div class="col-6 mb-3">
                   <label for="origin_price">原價</label>
-                  <input type="number" id="origin_price" class="form-control" v-model="tempProduct.origin_price">
+                  <input type="number" id="origin_price" name="origin_price" class="form-control" v-model="tempProduct.origin_price">
                 </div>
                 <div class="col-6 mb-3">
                   <label for="price">售價</label>
-                  <input type="number" id="price" class="form-control" v-model="tempProduct.price">
+                  <input type="number" id="price" name="price" class="form-control" v-model="tempProduct.price">
                 </div>
                 <hr/>
                 <div>
                 <label for="description" class="form-label">產品描述</label>
-                <textarea type="text" id="description" class="form-control" v-model="tempProduct.description"></textarea>
+                <textarea type="text" id="description" name="description" class="form-control" v-model="tempProduct.description"></textarea>
                 <label for="content" class="form-label">說明內容</label>
                 <textarea type="text" id="content" class="form-control" v-model="tempProduct.content"></textarea>
-                <input type="checkbox" id="is_enabled" v-model="tempProduct.is_enabled" 
+                <input type="checkbox" id="is_enabled" name="is_enabled" v-model="tempProduct.is_enabled" 
                   >
                 <label for="is_enabled" class="form-check-label">是否啟用</label>
               </div>
@@ -50,8 +50,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-secondary" @click="saveUpdate">Save changes</button>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-secondary" @click="saveUpdate">儲存</button>
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
 
 <script setup lan="ts">
   import Modal from 'bootstrap/js/dist/modal';
-  import { ref, onMounted, watch, defineEmits} from 'vue';
+  import { ref, onMounted, watch } from 'vue';
 
   const modalRef = ref(null);
   const modal = ref(null);

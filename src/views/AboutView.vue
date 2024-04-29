@@ -1,5 +1,5 @@
 <template>
-  <NavBar/>
+  <UserNavBar/>
   <div class="about">
     <h1>This is an about page</h1>
   </div>
@@ -9,5 +9,5 @@
 </style>
 
 <script setup lang="ts">
-import NavBar from '@/components/NavBar.vue';
+import UserNavBar from '@/components/UserNavBar.vue';
 </script>

@@ -10,8 +10,8 @@
           <p>確定刪除『{{ props.item.title }}』?</p>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary" @click="saveDel">Save changes</button>
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-secondary" @click="saveDel">儲存</button>
         </div>
       </div>
     </div>
@@ -21,11 +21,11 @@
 
 <script setup lang="ts">
   import Modal from 'bootstrap/js/dist/modal';
-  import { ref, onMounted, defineProps, defineEmits } from 'vue';
+  import { ref, onMounted } from 'vue';
 
   const delModalRef = ref<any>(null);
   const modal = ref<any>(null);
-  
+
   onMounted(() => {
     modal.value = new Modal(delModalRef.value);
   })
