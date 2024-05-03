@@ -1,5 +1,8 @@
 <template>
   <div class="container">
+    <div v-if="loading" style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+      <Loading/>
+    </div>
     <div class="text-end">
       <button type="button" class="btn btn-outline-dark" @click.prevent="openModal(true)">新增一個產品</button>
     </div>
@@ -29,6 +32,7 @@
     </table>
     <Modal ref="productModal" :product="tempProduct" @update-product="updateProduct"></Modal>
     <delModal ref="delProductModal" :item="tempProduct" @del-product="delProduct"></delModal>
+    <page class="d-flex justify-content-center mt-3" :pages="pagination" @update-page="getProduct"></page>
   </div>
 </template>
 
@@ -46,6 +50,8 @@ td {
 <script setup lang="ts">
   import Modal from '@/components/ProductModal.vue';
   import delModal from '@/components/DelModal.vue';
+  import page from '@/components/Pagination.vue';
+  import Loading from '@/components/Loading.vue'
   import axios from 'axios';
   import { ref } from 'vue';
 
@@ -59,11 +65,16 @@ td {
   const initialProduct: Product[] = [];
   
   const data = ref<Product[]>(initialProduct);
+  const pagination = ref({})
+  let loading = ref(true);
+
   //取得產品資料
-  function getProduct() {
-    const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/products/all`
+  function getProduct( page = 1) {
+    const api = `${import.meta.env.VITE_APP_API}api/${import.meta.env.VITE_APP_PATH}/admin/products?page=${page}`
     axios.get(api).then((res) => {
-      data.value = res.data.products
+      data.value = res.data.products;
+      pagination.value = res.data.pagination;
+      loading.value = false;
       console.log(res)
     })
   }

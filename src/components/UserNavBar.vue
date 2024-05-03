@@ -11,7 +11,7 @@
             <RouterLink to="/about" class="nav-link">關於我們</RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink to="/product" class="nav-link">產品頁面</RouterLink>
+            <RouterLink to="/user/shopping" class="nav-link">產品頁面</RouterLink>
           </li>
           <li class="nav-item">
             <RouterLink to="/login" class="nav-link"><i class="bi bi-people"></i></RouterLink>

@@ -1,8 +1,9 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHashHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
+  linkActiveClass: 'active',
   routes: [
     {
       path: '/',
@@ -32,10 +33,21 @@ const router = createRouter({
       ]
     },
     {
-      path:'/product',
-      component: () => import('../views/Product.vue')
+      path:'/user',
+      component: () => import('../views/UserBoard.vue'),
+      children:[
+        {
+          path:'shopping',
+          component: () => import('../views/Shopping.vue')
+        },
+        {
+          path:'product/:product',
+          component: () => import('../views/UserProduct.vue')
+        },
+      ]
     }
   ]
 })
 
 export default router
+
